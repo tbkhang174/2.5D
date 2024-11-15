@@ -86,12 +86,21 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Hit enemy: " + other.name);
 
             ShadowController shadowController = other.GetComponent<ShadowController>();
+            SkullwolfController skullwolfController = other.GetComponent<SkullwolfController>();
 
             if (shadowController != null)
             {
                 Debug.Log("Collided with: " + other.tag);
                 shadowController.TakeDamage(attackDamage);
             }
+
+            if (skullwolfController != null)
+            {
+                Debug.Log("Collided with: " + other.tag);
+                skullwolfController.TakeDamage(attackDamage);
+            }
         }
     }
+
+
 }
