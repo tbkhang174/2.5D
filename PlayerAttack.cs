@@ -6,15 +6,19 @@ public class PlayerAttack : MonoBehaviour
     public int attackDamage;
     public LayerMask enemyLayer;
     public Animator animator;
+    public HealthBar healthBar;
     public BoxCollider attackCollider; // Collider cần bật tắt
     public float attackDelay = 0.65f;
     public float attackDelay02 = 0.30f;
     public float attackDelay03 = 1.02f;
+    public int maxHealth = 100;
+    private int currentHealth;
 
     public bool isAttacking = false;
 
     private void Start()
     {
+        currentHealth = maxHealth;
         // Đặt collider thành trigger để tránh đẩy nhau ra
         attackCollider.isTrigger = true;
     }
@@ -81,7 +85,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (isAttacking && other.CompareTag("Enemy"))
         {
             Debug.Log("Hit enemy: " + other.name);
 
@@ -101,6 +105,4 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-
-
 }

@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public SpriteRenderer sr;
     private PlayerAttack playerAttack;
+    public HealthBar healthBar;
+    public SkullwolfController skullwolfController;
 
 
     private void Start()
@@ -165,5 +167,26 @@ public class PlayerController : MonoBehaviour
         Vector3 colliderScale = playerAttack.attackCollider.transform.localScale;
         colliderScale.x *= -1;  // Lật scale của collider theo trục X
         playerAttack.attackCollider.transform.localScale = colliderScale;
+    }
+
+    public void TakeDamage(int WolfattackDamage)
+    {
+        if (healthBar == null)
+        {
+            Debug.LogError("HealthBar không được gán. Vui lòng kiểm tra lại.");
+            return;
+        }
+
+        healthBar.Health -= WolfattackDamage;
+
+        if (healthBar.Health <= 0)
+        {
+            healthBar.Health = 0; // Đảm bảo giá trị máu không âm
+            Debug.Log("Player đã chết.");
+        }
+        else
+        {
+            Debug.Log("Player bị sát thương, máu còn lại: " + healthBar.Health);
+        }
     }
 }
