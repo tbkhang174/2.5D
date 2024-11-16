@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public int attackDamage;
+    public int attackDamage = 100;
     public LayerMask enemyLayer;
     public Animator animator;
     public HealthBar healthBar;
@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
+        attackDamage = 100;
         currentHealth = maxHealth;
         // Đặt collider thành trigger để tránh đẩy nhau ra
         attackCollider.isTrigger = true;
@@ -87,6 +88,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (isAttacking && other.CompareTag("Enemy"))
         {
+            Debug.Log($"Player attackDamage: {attackDamage}");
+
             Debug.Log("Hit enemy: " + other.name);
 
             ShadowController shadowController = other.GetComponent<ShadowController>();

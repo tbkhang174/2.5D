@@ -9,6 +9,7 @@ public class SkullwolfController : MonoBehaviour
     private int currentHealth;
     public HealthBar healthBar;
     public PlayerController playerController;
+    public PlayerAttack playerAttack;
     private bool isDead = false;
     private bool isAttacking = false;  // Để kiểm soát trạng thái tấn công
     public float attackCooldown = 1f;  // Thời gian cooldown cho đòn tấn công
@@ -35,29 +36,29 @@ public class SkullwolfController : MonoBehaviour
 
         if (healthCanvas != null)
         {
-            healthCanvas.SetActive(false); // Ẩn thanh máu khi bắt đầu
+            healthCanvas.SetActive(false);
         }
 
         if (itemDropPrefab != null)
         {
-            itemDropPrefab.SetActive(false); // Ẩn item lúc đầu
+            itemDropPrefab.SetActive(false); 
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int attackDamage)
     {
         if (isDead) return;
 
-        currentHealth -= damage;
+        currentHealth -= attackDamage;
 
         if (healthCanvas != null && !healthCanvas.activeSelf)
         {
-            healthCanvas.SetActive(true); // Hiển thị thanh máu
+            healthCanvas.SetActive(true); 
         }
 
         if (healthBar != null)
         {
-            healthBarWolf.SetHealth(currentHealth); // Cập nhật giá trị thanh máu
+            healthBarWolf.SetHealth(currentHealth); 
         }
 
         animator.SetTrigger("isHurt");
@@ -123,7 +124,7 @@ public class SkullwolfController : MonoBehaviour
                     PlayerAttack playerAttack = player.GetComponentInParent<PlayerAttack>();
                     if (playerAttack != null)
                     {
-                        playerController.TakeDamage(5);  // Tạo sát thương cho player, có thể tùy chỉnha
+                        playerController.TakeDamage(5);
                         Debug.Log("Skullwolf gây sát thương cho player");
                     }
                 }
@@ -135,13 +136,12 @@ public class SkullwolfController : MonoBehaviour
 
     private IEnumerator AttackCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);  // Chờ thời gian cooldown
-        isAttacking = false;  // Tắt trạng thái tấn công sau cooldown
+        yield return new WaitForSeconds(attackCooldown);  
+        isAttacking = false;  
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Hiển thị phạm vi tấn công trong Editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
