@@ -13,12 +13,13 @@ public class PlayerAttack : MonoBehaviour
     public float attackDelay03 = 1.02f;
     public int maxHealth = 100;
     private int currentHealth;
+    private int currentAttackDame;
 
     public bool isAttacking = false;
 
     private void Start()
     {
-        attackDamage = 100;
+        currentAttackDame = attackDamage;
         currentHealth = maxHealth;
         // Đặt collider thành trigger để tránh đẩy nhau ra
         attackCollider.isTrigger = true;
